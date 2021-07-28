@@ -1,6 +1,6 @@
 package io.github.twibap.lottory.lottery
 
-class Ball: Comparable<Ball> {
+class Ball(numbers: Array<Ball?>) : Comparable<Ball> {
 
     var value: Int
 
@@ -8,8 +8,8 @@ class Ball: Comparable<Ball> {
         var randomVal: Double
         do {
             randomVal = Math.random();
-            this.value = (randomVal* MAX_VALUE).toInt() + 1
-        } while (value !in MIN_VALUE..MAX_VALUE)
+            this.value = (randomVal* MAX_VALUE).toInt() + MIN_VALUE
+        } while (value in numbers.map { ball -> ball?.value })
     }
 
     companion object {
@@ -19,6 +19,10 @@ class Ball: Comparable<Ball> {
 
     override fun compareTo(other: Ball): Int {
         return this.value - other.value
+    }
+
+    override fun toString(): String {
+        return "($value)"
     }
 
 }
